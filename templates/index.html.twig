@@ -1,10 +1,20 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Accueil</title>
-</head>
-<body>
-<h1>Bienvenu ! </h1>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series - Accueil{% endblock %}
+
+{#{% block stylesheets %}#}
+{#    {{ parent() }}#}
+{#    {{ encore_entry_link_tags('index') }}#}
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+{#    {{ parent() }}#}
+{#    {{ encore_entry_script_tags('index') }}#}
+{#{% endblock %}#}
+
+{% block body %}
+{#    <img src="{{ asset('build/images/1.png') }}" alt="LOGOOOOOOOOOOOOOOO"/>  #}
+    <h1>Bienvenue</h1>
+    <h2>Cece</h2>
+
+{% endblock %}
