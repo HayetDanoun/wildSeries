@@ -18,6 +18,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+node_modules/
+public/build/
 
 ###> editeur de texte ###
 .idea
