@@ -29,6 +29,10 @@ class Program
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $year = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $Category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +94,18 @@ class Program
     public function setYear(int $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?Category $Category): self
+    {
+        $this->Category = $Category;
 
         return $this;
     }
