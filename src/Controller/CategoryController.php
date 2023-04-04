@@ -29,10 +29,13 @@ Class CategoryController extends AbstractController
             throw $this->createNotFoundException("Aucune catégorie nommée $categoryName");
         }
 
-        $programs = $programRepository->findBy(['category' => $category], ['id' => 'DESC'], 3);
+        $programs = $programRepository->findBy(
+            ['Category' => $category],
+            ['id' => 'DESC'],
+            3
+        );
 
         return $this->render('category/show.html.twig', [
-            'category' => $category,
             'programs' => $programs,
         ]);
     }
