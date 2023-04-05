@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
+
     const PROGRAMS = [
         [
             'title' => 'Belle plus la vie',
@@ -30,7 +31,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         [
             'title' => 'desperate-housewives',
             'country'=> 'America',
-            'synopsis' => 'un ville cachant bien des secret',
+            'synopsis' => 'un ville cachant bien des secrets',
             'year' => '2003',
         ],
         [

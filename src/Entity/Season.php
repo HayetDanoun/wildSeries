@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SeasonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
@@ -21,8 +22,8 @@ class Season
     #[ORM\Column(nullable: true)]
     private ?int $year = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $description = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'seasons')]
     #[ORM\JoinColumn(nullable: false)]
@@ -65,12 +66,12 @@ class Season
         return $this;
     }
 
-    public function getDescription(): ?int
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(?int $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
