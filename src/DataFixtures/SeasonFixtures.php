@@ -5,6 +5,7 @@ use App\Entity\Season;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Proxies\__CG__\App\Entity\Program;
 use ReflectionClass;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
@@ -35,12 +36,11 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(null, $TAB_MAX_SEASON);
     }
-    //ajoute des valeurs aleatoire
+    //ajoute des valeurs aleatoires
     public function load(ObjectManager $manager): void
     {
         $this->modifiedConstanteSeasons();
         $TAB_MAX_SEASON = $this::$SEASONS;
-
 
         foreach ($TAB_MAX_SEASON as $key => $newSeason) {
             $season = new Season();
@@ -59,7 +59,7 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
-            CategoryFixtures::class,
+            ProgramFixtures::class,
         ];
     }
 }
