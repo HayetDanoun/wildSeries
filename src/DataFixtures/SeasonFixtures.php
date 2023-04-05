@@ -11,16 +11,21 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
     public static  $SEASONS = [];
 
-    private function modifiedConstante()
+    private function modifiedConstanteSeasons()
     {
-        $TAB_MAX_SEASON = [];
+        $TAB_MAX_SEASON = null ;
         foreach (ProgramFixtures::PROGRAMS as $key => $program){
             $nb= rand(1,10);
+            $programTitle =  str_replace(' ','',$program['title']) ;
             for($i=0 ; $i<$nb ; $i=$i+1) {
-                $TAB_MAX_SEASON [$key][] = [
-                    'number' => $i +1,
+                $number = $i+1;
+                $TAB_MAX_SEASON[] = [
+                    'number' =>$number,
                     'year' => 2000 + $i,
-                    'description' => 'Description de la saison ' . $i +1 . ' pour le programme ' . $program['title'],
+                    'description' => 'Description de la saison ' . $number . ' pour le programme ' . $program['title'],
+                    'programTitle' => $programTitle,
+                    'programReference' => 'program_' . $programTitle,
+                    'nameReference' => 'season' . $number . '_' . $programTitle,
                 ];
             }
         }
@@ -33,27 +38,20 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
     //ajoute des valeurs aleatoire
     public function load(ObjectManager $manager): void
     {
-        $this->modifiedConstante();
-        var_dump($this::$SEASONS);
+        $this->modifiedConstanteSeasons();
         $TAB_MAX_SEASON = $this::$SEASONS;
 
 
-        foreach (ProgramFixtures::PROGRAMS as $key => $program) {
-            //pour un programme
-                $newSeasons = $TAB_MAX_SEASON[$key];
-                foreach ($newSeasons as $newSeason) {
-                    $programTitle =  str_replace(' ','',$program['title']) ;
+        foreach ($TAB_MAX_SEASON as $key => $newSeason) {
+            $season = new Season();
+            $season->setNumber($newSeason['number']);
+            $season->setYear($newSeason['year']);
+            $season->setDescription($newSeason['description']);
+            $programSeason = $this->getReference($newSeason['programReference']);
+            $season->setProgram($programSeason);
+            $this->addReference($newSeason['nameReference'], $season);
 
-                    $season = new Season();
-                    $season->setNumber($newSeason['number']);
-                    $season->setYear($newSeason['year']);
-                    $season->setDescription($newSeason['description']);
-                    $programSeason = $this->getReference('program_' . $programTitle);
-                    $season->setProgram($programSeason);
-                    $this->addReference('season' . $newSeason['number'] . '_' . $programTitle , $season);
-
-                    $manager->persist($season);
-                }
+            $manager->persist($season);
         }
         $manager->flush();
     }
