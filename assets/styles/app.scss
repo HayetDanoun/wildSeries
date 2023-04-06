@@ -3,13 +3,24 @@ $primary: darken(#428bca, 20%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
+*{
+    padding: 0;
+    margin:0;
+    text-decoration : none;
+}
+
 body {
     /*background-color: lightgray;*/
+    /*background: steelblue;*/
+}
 
+a {
+    text-decoration : none;
 }
 
 h1{
     color: #B0413E;
+    text-align: center;
 }
 
 .logo{

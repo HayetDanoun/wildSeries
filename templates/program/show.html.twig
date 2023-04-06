@@ -3,23 +3,36 @@
 {% block title %}Série #{{ program.id }}{% endblock %}
 
 {% block body %}
-    <div class="media">
-        <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-        <div class="media-body">
-            <h1 class="mt-0">{{ program.title }}</h1>
-            <p>{{ program.synopsis }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
+        {% if program.poster is empty %}
+            {% set poster =  'build/images/program/poster/no_poster.png' %}
+        {% else %}
+            {% set poster = program.poster %}
+        {% endif %}
+
+    <div style="margin:50px;display: flex; justify-content: center">
+        <div class="card mb-3" style="max-width: 95%;">
+            <div  class="row g-0">
+                <div class="col-md-4">
+                    <img style="width: 100%;height:auto;" src="{{ asset(poster) }}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ program.title }}</h5>
+                        <p class="card-text">{{ program.synopsis }}</p>
+                    </div>
+                </div>
+            <div style="margin-top:10px; text-align: center">
+                {% for programSeason in program.seasons %}
+                    <a href="{{ path('program_season_show',{programId: program.id, seasonId: programSeason.id}) }}">
+                        <button class="btn btn-primary" style="margin-bottom: 3px">
+                            {{ 'saison '~ programSeason.number}}
+                        </button>
+                    </a>
+                {% endfor %}
+            </div>
+
         </div>
-        <div class="season">
-            {% for programSeason in program.seasons %}
-                <a href="{{ path('program_season_show',{programId: program.id, seasonId: programSeason.id}) }}">
-                    {{ 'saison '~ programSeason.number }}
-                </a>
-            {% endfor %}
         </div>
     </div>
 
-    <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
-    </a>
 {% endblock %}

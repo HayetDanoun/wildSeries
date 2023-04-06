@@ -13,31 +13,31 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         [
             'title' => 'Belle plus la vie',
             'country'=> 'France',
-            'synopsis' => 'un truc pour les vieilles',
+            'synopsis' => 'Un truc pour les vieilles',
             'year' => '2000',
         ],
         [
             'title' => 'teen wolf',
             'country'=> 'Etats-Unis',
-            'synopsis' => 'des jeunes se transforment en loup-garou',
+            'synopsis' => 'Des jeunes se transforment en loup-garou',
             'year' => '2001',
         ],
         [
             'title' => 'Walking dead',
             'country'=> 'Etats-Unis',
-            'synopsis' => 'des zombies envahissent la terre',
+            'synopsis' => 'Des zombies envahissent la terre',
             'year' => '2002',
         ],
         [
             'title' => 'desperate-housewives',
             'country'=> 'America',
-            'synopsis' => 'un ville cachant bien des secrets',
+            'synopsis' => 'Un ville cachant bien des secrets',
             'year' => '2003',
         ],
         [
             'title' => 'lol',
             'country'=> 'france',
-            'synopsis' => 'c\'est chere drole des humoristes qui doivent essayer de se faire rire et eux ne doivent pas rigoler. Je vous le recommande :) ',
+            'synopsis' => 'C\'est chere drôle, en gros c\'est des humoristes qui doivent essayer de se faire rire et eux ne doivent pas rigoler. Je vous le recommande :) ',
             'year' => '2004',
         ],
     ];

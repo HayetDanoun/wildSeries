@@ -3,12 +3,33 @@
 {% block title %}Série #{{ program.id }} Season {{ season.id }}{% endblock %}
 
 {% block body %}
-    {% for episodeSeason in season.episodes %}
 
-        {{ 'Episode : ' ~ episodeSeason.number }}
-    {% endfor %}
+    <h1> {{ 'Saison ' ~ season.number ~ ' de ' ~ season.program.title }}</h1>
+
+    {% if season is defined %}
+        <div class="row row-cols-1 row-cols-md-4 g-4" style=" margin-bottom: 100px; width: 95%">
+            {% for episodeSeason in season.episodes %}
+                <div class="col">
+                    <div class="card h-100" style="height: 25rem;">
+                        <div class="card-header bg-transparent " style="text-align: center;">
+                            {{ episodeSeason.title }}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ episodeSeason.synopsis }}</p>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        Aucun episode trouver.
+    {% endif %}
+
 
     <a href="{{ path('program_index') }}">
         Retour à la liste des programmes
     </a>
+
+
 {% endblock %}
