@@ -6,50 +6,33 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use ReflectionClass;
+use Faker\Factory;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
-    public static  $EPISODES = [];
 
-    private function modifiedConstanteEpisodes()
+    public function load(ObjectManager $manager): void
     {
-        $TAB_EPISODES = null ;
-        foreach (SeasonFixtures::$SEASONS as $key => $season){
-            $nb= rand(1,30);
-            for($i=0 ; $i<$nb ; $i=$i+1) {
-                $number = $i+1;
-                $TAB_EPISODES[] = [
-                    'number' =>$number,
-                    'title' => 'Episode '. $number . " : Tintin et la patate mystere" ,
-                    'synopsis' => 'Synopsis de l\'episde '. $number .  ', saison ' . $season['number'] . ' du programme ' . $season['programTitle'],
-                    'seasonReference' => $season['nameReference'],
-                    'nameReference' => 'episode' . $number . '_' . $season['nameReference'],
-                ];
+        $faker = Factory::create();
+        for($i=0 ; $i<5 ; $i++) {
+            for($j=0 ; $j<5 ; $j++) {
+                for ($k = 0; $k < 10; $k++) {
+                    $episode = new Episode();
+                    $episode->setNumber($k+1);
+                    $episode->setTitle($faker->title);
+                    $episode->setSynopsis($faker->paragraph(3, true));
+
+                    $nameSeason = 'program_' . $i. '_season_' . $j;
+                    $season = $this->getReference($nameSeason);
+                    $episode->setSeason($season);
+
+                    $this->addReference($nameSeason . '_episode_' . $k, $episode);
+
+                    $manager->persist($episode);
+                }
             }
         }
 
-        $reflection = new ReflectionClass($this);
-        $reflectionProperty = $reflection->getProperty('EPISODES');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue(null, $TAB_EPISODES);
-    }
-    //ajoute des valeurs aleatoires
-    public function load(ObjectManager $manager): void
-    {
-        $this->modifiedConstanteEpisodes();
-        $TAB_EPISODES = $this::$EPISODES;
-
-        foreach ($TAB_EPISODES as $key => $newEpisode) {
-            $episode = new Episode();
-            $episode->setNumber($newEpisode['number']);
-            $episode->setTitle($newEpisode['title']);
-            $episode->setSynopsis($newEpisode['synopsis']);
-            $season = $this->getReference($newEpisode['seasonReference']);
-            $episode->setSeason($season);
-            $this->addReference($newEpisode['nameReference'], $episode);
-
-            $manager->persist($episode);
-        }
         $manager->flush();
     }
 

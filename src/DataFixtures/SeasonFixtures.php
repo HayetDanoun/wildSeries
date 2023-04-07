@@ -1,92 +1,47 @@
 <?php
+
 namespace App\DataFixtures;
 
 use App\Entity\Season;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Proxies\__CG__\App\Entity\Program;
-use ReflectionClass;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+
+//Tout d'abord nous ajoutons la classe Factory de FakerPhp
+use Faker\Factory;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
-    public static  $SEASONS = [];
-
-    private function modifiedConstanteSeasons()
-    {
-        $TAB_MAX_SEASON = null ;
-        foreach (ProgramFixtures::PROGRAMS as $key => $program){
-            $nb= rand(1,10);
-            $programTitle =  str_replace(' ','',$program['title']) ;
-            for($i=0 ; $i<$nb ; $i=$i+1) {
-                $number = $i+1;
-                $TAB_MAX_SEASON[] = [
-                    'number' =>$number,
-                    'year' => 2000 + $i,
-                    'description' => 'Description de la saison ' . $number . ' pour le programme ' . $program['title'],
-                    'programTitle' => $programTitle,
-                    'programReference' => 'program_' . $programTitle,
-                    'nameReference' => 'season' . $number . '_' . $programTitle,
-                ];
-            }
-        }
-
-        $reflection = new ReflectionClass($this);
-        $reflectionProperty = $reflection->getProperty('SEASONS');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue(null, $TAB_MAX_SEASON);
-    }
-    //ajoute des valeurs aleatoires
     public function load(ObjectManager $manager): void
     {
-        $this->modifiedConstanteSeasons();
-        $TAB_MAX_SEASON = $this::$SEASONS;
+        //Puis ici nous demandons à la Factory de nous fournir un Faker
+        $faker = Factory::create();
 
-        foreach ($TAB_MAX_SEASON as $key => $newSeason) {
-            $season = new Season();
-            $season->setNumber($newSeason['number']);
-            $season->setYear($newSeason['year']);
-            $season->setDescription($newSeason['description']);
-            $programSeason = $this->getReference($newSeason['programReference']);
-            $season->setProgram($programSeason);
-            $this->addReference($newSeason['nameReference'], $season);
+        //$nameReferenciel = [] ;
+        for($i = 0; $i < 5; $i++) {
+            for($j = 0; $j < 5; $j++) {
+                $season = new Season();
+                //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
+                $season->setNumber($j+1);
+                $season->setYear($faker->year());
+                $season->setDescription($faker->paragraphs(3, true));
+                //$nameReferencielProgramme = 'program_' . $faker->numberBetween(0, 5);
+                $nameReferencielProgramme = 'program_' . $i;
+                $season->setProgram($this->getReference($nameReferencielProgramme));
+                //echo $nameReferencielProgramme . '_season_' . $j . PHP_EOL;
+                $addRef = $nameReferencielProgramme . '_season_' . $j;
+                $this->addReference($addRef, $season);
 
-            $manager->persist($season);
+                $manager->persist($season);
+            }
         }
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProgramFixtures::class,
         ];
     }
 }
-
-//ancienne version, sans la description + year
-//    public function load(ObjectManager $manager): void
-//    {
-//
-//        $TAB_MAX_SEASON = [];
-//        foreach (ProgramFixtures::PROGRAMS as $nb) {
-//            $TAB_MAX_SEASON[] = rand(0, 10);
-//
-//        }
-//        var_dump($TAB_MAX_SEASON);
-//        foreach (ProgramFixtures::PROGRAMS as $key => $program) {
-//            $programTitle = str_replace(' ', '', $program['title']);
-//            $program = $this->getReference('program_' . $programTitle);
-//
-//            for ($j = 1; $j <= $TAB_MAX_SEASON[$key]; $j = $j + 1) {
-//                echo $TAB_MAX_SEASON[$key];
-//                $season = new Season();
-//                $season->setNumber($j);
-//                $season->setProgram($program);
-//                $this->addReference('season' . $j . '_' . $programTitle, $season);
-//                echo 'season' . $j . '_' . $programTitle .
-//                    $manager->persist($season);
-//            }
-//            echo 'b';
-//        }
-//    }

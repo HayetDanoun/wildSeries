@@ -44,7 +44,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::PROGRAMS as $newValueProgram) {
+        foreach (self::PROGRAMS as $key => $newValueProgram) {
             $program = new Program();
             $program->setTitle($newValueProgram['title']);
             $program->setCountry($newValueProgram['country']);
@@ -56,7 +56,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
             $program->setCategory($category);
             $manager->persist($program);
-            $this->addReference('program_'. str_replace(' ', '', $newValueProgram['title']),$program);
+            $this->addReference('program_'. $key ,$program);
         }
 
         $manager->flush();
