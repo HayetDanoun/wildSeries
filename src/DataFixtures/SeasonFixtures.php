@@ -12,14 +12,15 @@ use Faker\Factory;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
+    const NB_SEASON = 5;
     public function load(ObjectManager $manager): void
     {
         //Puis ici nous demandons à la Factory de nous fournir un Faker
         $faker = Factory::create();
 
         //$nameReferenciel = [] ;
-        for($i = 0; $i < 5; $i++) {
-            for($j = 0; $j < 5; $j++) {
+        for($i = 0; $i < count(ProgramFixtures::PROGRAMS); $i++) { //ici count(ProgramFixtures::PROGRAMS) = 5 c'est si on aug ou diminue le nombre de fixture, cela change automatiquement
+            for($j = 0; $j < self::NB_SEASON; $j++) {
                 $season = new Season();
                 //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
                 $season->setNumber($j+1);

@@ -10,13 +10,14 @@ use Faker\Factory;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
+    const NB_EPISODE = 10;
 
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
-        for($i=0 ; $i<5 ; $i++) {
-            for($j=0 ; $j<5 ; $j++) {
-                for ($k = 0; $k < 10; $k++) {
+        for($i=0 ; $i< count(ProgramFixtures::PROGRAMS) ; $i++) {
+            for($j=0 ; $j<SeasonFixtures::NB_SEASON ; $j++) {
+                for ($k = 0; $k < self::NB_EPISODE; $k++) {
                     $episode = new Episode();
                     $episode->setNumber($k+1);
                     $episode->setTitle($faker->title);
