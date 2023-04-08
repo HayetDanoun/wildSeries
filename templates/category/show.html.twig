@@ -3,8 +3,9 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1 style="text-align: center; margin: 30px">Toutes les séries de la table program : </h1>
-    {% if programs is defined %}
+
+    {% if programs is not empty %}
+        <h1 style="text-align: center; margin: 30px">Toutes les séries de la table program : </h1>
         <div class="row row-cols-1 row-cols-md-4 g-4" style=" justify-content:center; margin-bottom: 50px; text-align: center">
             {% for program in programs %}
                 <div class="col">

@@ -1,0 +1,14 @@
+{# templates/category/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+    <h1>Add a category</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Add program</button>
+    {{ form_end(form) }}
+
+{% endblock %}
