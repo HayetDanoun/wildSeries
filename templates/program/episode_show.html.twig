@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Série #{{ program.id }} Season {{ season.id }}{% endblock %}
+
+{% block body %}
+
+
+    <h1> {{ program.title ~ ' saison ' ~ season.number ~ ' episode ' ~ episode.number }}</h1>
+
+    {% if episode is defined %}
+        <div style="margin:50px;display: flex; justify-content: center">
+            <div class="card mb-3" style="max-width: 95%;">
+                <div  class="row g-0">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ episode.title }}</h5>
+                            <p class="card-text">{{ episode.synopsis }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        Aucun episode trouvé.
+    {% endif %}
+
+
+    <a href="{{ path('program_index') }}">
+        Retour à la liste des programmes
+    </a>
+
+
+{% endblock %}

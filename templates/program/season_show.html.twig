@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
     <h1> {{ 'Saison ' ~ season.number ~ ' de ' ~ season.program.title }}</h1>
 
     {% if season is defined %}
@@ -12,12 +13,14 @@
                 <div class="col">
                     <div class="card h-100" style="height: 25rem;">
                         <div class="card-header bg-transparent " style="text-align: center;">
-                            {{ episodeSeason.title }}
+                            {{'Episode ' ~ episodeSeason.number ~ ' : ' ~ episodeSeason.title }}
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ episodeSeason.synopsis }}</p>
                         </div>
-
+                        <div style="text-align: center; margin-bottom:30px ">
+                            <a href="{{ path('program_episode_show', { programId: program.id, seasonId:season.id, episodeId:episodeSeason.id }) }}" class="btn btn-primary">En savoir plus</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
