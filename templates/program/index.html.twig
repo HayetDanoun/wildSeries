@@ -16,6 +16,7 @@
                             {% set poster =  'build/images/program/poster/no_poster.png' %}
                         {% else %}
                             {% set poster = program.poster %}
+                            {{ dump(program.poster) }}
                         {% endif %}
                         <img src="{{ asset(poster) }}" class="card-img-top" alt="{{ program.title }}">
                         <div class="card-body">

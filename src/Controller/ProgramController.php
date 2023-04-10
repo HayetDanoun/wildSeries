@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Repository\ProgramRepository;
-use App\Repository\SeasonRepository;
 
 use App\Entity\Program;
 use App\Entity\Season;
@@ -65,19 +64,50 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/new',name:'new')]
-    public function new(Request $request, ProgramRepository $programRepository) : Response
+    public function new(Request $request, ProgramRepository $programRepository): Response
     {
+        $errors = [];
         $program = new Program();
-        $form = $this->createForm(ProgramType::class,$program);
-
+        $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $programRepository->save($program,true);
-            return $this->redirectToRoute('program_index');
+
+        if ($form->isSubmitted()) {
+            $imageFile = $form->get('poster')->getData();
+            if ($imageFile) {
+                // Vérification de la taille de l'image (inférieur à 1Mo)
+                if ($imageFile->getSize() > 1000000) {
+                    $errors[] = 'La taille de l\'image ne peut pas dépasser 1 Mo.';
+                }
+                // Vérification de l'extension de l'image
+                if (!in_array($imageFile->guessExtension(), ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                    $errors[] = 'Le format de l\'image doit être jpg, jpeg, png, gif ou webp.';
+                }
+
+                $uploadDir = '/uploads/program/poster/';
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+                $newFilename = $uploadDir . basename($newFilename);
+                try {
+                    $imageFile->move(
+                        //road in the repertory config/serviecs.yaml
+                        $this->getParameter('program_poster_directory'),
+                        $newFilename
+                    );
+                    $program->setPoster($newFilename);
+
+                } catch (FileException $e) {
+                            $errors[] = 'Une erreur est survenue lors de l\'upload de l\'image.';
+                        }
+            }
+            if (empty($errors)) {
+                $programRepository->save($program, true);
+                return $this->redirectToRoute('program_index');
+            }
         }
 
-        return  $this->render("program/new.html.twig",['form' => $form]);
-
+        return $this->render("program/new.html.twig", [
+            'form' => $form->createView(),
+            'errors' => $errors,
+        ]);
     }
 }
 

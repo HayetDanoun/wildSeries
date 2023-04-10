@@ -5,10 +5,26 @@
 {% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <h1>Add a category</h1>
+
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Add program</button>
+        {{ form_row(form.title) }}
+        {{ form_row(form.synopsis) }}
+        {{ form_row(form.poster) }}
+        {{ form_row(form.country) }}
+        {{ form_row(form.year) }}
+        {{ form_row(form.category) }}
+        <button type="submit">Add a category</button>
     {{ form_end(form) }}
 
+{#    {{ dump(errors) }}#}
+    {% for error in errors %}
+        {{ error ~ "\n" }}
+    {% endfor %}
+
+{#    <h1>Add a category</h1>#}
+{#    {{ form_start(form) }}#}
+{#        {{ form_widget(form) }}#}
+{#        {{ form_row(form.poster) }}#}
+{#        <button type="submit">Add program</button>#}
+{#    {{ form_end(form) }}#}
 {% endblock %}
