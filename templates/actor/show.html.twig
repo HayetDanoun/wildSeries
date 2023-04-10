@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actor{% endblock %}
+
+{% block body %}
+    <h1>Season</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ actor.id }}</td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>{{ actor.firstname ~ " " ~actor.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Programs</th>
+            <td>
+                {% if actor.programs is not empty %}
+                <ul>
+                    {% for program in actor.programs %}
+                        <a href=" {{ path('program_show', { id : program.id }) }}">
+                            <li>{{ program.title }}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+                {% else  %}
+                    <p>Cette acteur n'a joué dans aucune série</p>
+                {% endif %}
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_index') }}">back to home</a>
+
+{% endblock %}

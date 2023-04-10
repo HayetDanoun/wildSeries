@@ -19,6 +19,17 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ program.title }}</h5>
                         <p class="card-text">{{ program.synopsis }}</p>
+                        <strong>Acteurs :</strong>
+                        <ul>
+                            {% for actor in program.actors %}
+                                <a href=" {{ path('actor_show', { id : actor.id }) }}">
+                                    <li>{{ actor.firstname ~ " " ~actor.lastname }}</li>
+                                </a>
+                            {% else %}
+                                <li>Aucun acteur pour cette série</li>
+                            {% endfor %}
+                        </ul>
+
                     </div>
                 </div>
             <div style="margin-top:10px; text-align: center">

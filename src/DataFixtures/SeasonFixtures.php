@@ -7,7 +7,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-//Tout d'abord nous ajoutons la classe Factory de FakerPhp
 use Faker\Factory;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
@@ -15,7 +14,6 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
     const NB_SEASON = 5;
     public function load(ObjectManager $manager): void
     {
-        //Puis ici nous demandons à la Factory de nous fournir un Faker
         $faker = Factory::create();
 
         //$nameReferenciel = [] ;
