@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert; //pour le composant Validator (#[Assert\TypeDeContrainte()])
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -13,9 +14,15 @@ class Category
     #[ORM\Id] //=clé primaire
     #[ORM\GeneratedValue] //générée automatiquement par la bdd
     #[ORM\Column]
+
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message:'Le champ name doit être rempli')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'La catégorie saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Program::class)]
@@ -70,3 +77,10 @@ class Category
 
 
 }
+/*
+ * Symfony intègre par défaut des traductions dans différentes langues.
+ * Si tu veux que tous les messages d'erreur soient automatiquement en français
+ * (et non plus en anglais), tu peux modifier la langue "par défaut" de Symfony dans
+ * le fichier config/packages/translation.yaml en modifiant la ligne default_locale:
+ * en en default_locale: fr
+ */

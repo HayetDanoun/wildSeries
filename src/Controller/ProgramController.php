@@ -71,7 +71,7 @@ Class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('poster')->getData();
             if ($imageFile) {
                 // Vérification de la taille de l'image (inférieur à 1Mo)
@@ -86,6 +86,7 @@ Class ProgramController extends AbstractController
                 $uploadDir = '/uploads/program/poster/';
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
                 $newFilename = $uploadDir . basename($newFilename);
+
                 try {
                     $imageFile->move(
                         //road in the repertory config/serviecs.yaml

@@ -11,13 +11,13 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     const PROGRAMS = [
         [
-            'title' => 'Belle plus la vie',
+            'title' => 'Plus Belle La Vie',
             'country'=> 'France',
             'synopsis' => 'Un truc pour les vieilles',
             'year' => '2000',
         ],
         [
-            'title' => 'teen wolf',
+            'title' => 'Teen Wolf',
             'country'=> 'Etats-Unis',
             'synopsis' => 'Des jeunes se transforment en loup-garou',
             'year' => '2001',
