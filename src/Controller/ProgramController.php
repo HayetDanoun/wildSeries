@@ -100,6 +100,7 @@ Class ProgramController extends AbstractController
                         }
             }
             if (empty($errors)) {
+                $this->addFlash('success', 'The new program has been created');
                 $programRepository->save($program, true);
                 return $this->redirectToRoute('program_index');
             }

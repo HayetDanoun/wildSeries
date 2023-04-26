@@ -30,11 +30,11 @@ class EpisodeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $episodeRepository->save($episode, true);
-
+            $this->addFlash('success','The new episode ' . $episode->getTitle() . ' has been created');
             return $this->redirectToRoute('app_episode_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('episode/new.html.twig', [
+        return $this->render('episode/new.html.twig', [
             'episode' => $episode,
             'form' => $form,
         ]);
@@ -56,6 +56,7 @@ class EpisodeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $episodeRepository->save($episode, true);
+            $this->addFlash('success','The new episode ' . $episode->getTitle() . ' has been edited');
 
             return $this->redirectToRoute('app_episode_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -70,6 +71,7 @@ class EpisodeController extends AbstractController
     public function delete(Request $request, Episode $episode, EpisodeRepository $episodeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
+            $this->addFlash('danger','The new episode ' . $episode->getTitle() . ' has been deleted');
             $episodeRepository->remove($episode, true);
         }
 

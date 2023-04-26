@@ -30,11 +30,11 @@ class SeasonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->save($season, true);
-
+            $this->addFlash('success','The new season ' . $season->getNumber() . ' of program  ' .  $season->getProgram()->getTitle() .'  has been created');
             return $this->redirectToRoute('app_season_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('season/new.html.twig', [
+        return $this->render('season/new.html.twig', [
             'season' => $season,
             'form' => $form,
         ]);
@@ -56,11 +56,12 @@ class SeasonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->save($season, true);
+            $this->addFlash('success','The new season ' . $season->getNumber() . ' of program  ' .  $season->getProgram()->getTitle() .'  has been edited');
 
             return $this->redirectToRoute('app_season_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('season/edit.html.twig', [
+        return $this->render('season/edit.html.twig', [
             'season' => $season,
             'form' => $form,
         ]);
@@ -70,6 +71,7 @@ class SeasonController extends AbstractController
     public function delete(Request $request, Season $season, SeasonRepository $seasonRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$season->getId(), $request->request->get('_token'))) {
+            $this->addFlash('danger','The new season ' . $season->getNumber() . ' of program  ' .  $season->getProgram()->getTitle() .'  has been deleted');
             $seasonRepository->remove($season, true);
         }
 
