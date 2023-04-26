@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Form\ProgramType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,13 +39,13 @@ Class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{programId}/seasons/{seasonId}',name:'season_show')]
+    #[Route('/{programId}/season/{seasonId}',name:'season_show')]
     #[Entity('program', options: ['mapping' => ['programId' => 'id']])]
     #[Entity('season', options: ['mapping' => ['seasonId' => 'id']])]
     public function showSeason(Program $program,Season $season): Response
     {
 
-        return $this->render("program/season_show.html.twig.", [
+        return $this->render("program/season_show.html.twig", [
             'program' => $program,
             'season' => $season,
         ]);
@@ -63,53 +64,33 @@ Class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/new',name:'new')]
+
+
+    #[Route('/new', name: 'program_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProgramRepository $programRepository): Response
     {
-        $errors = [];
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('poster')->getData();
-            if ($imageFile) {
-                // Vérification de la taille de l'image (inférieur à 1Mo)
-                if ($imageFile->getSize() > 1000000) {
-                    $errors[] = 'La taille de l\'image ne peut pas dépasser 1 Mo.';
-                }
-                // Vérification de l'extension de l'image
-                if (!in_array($imageFile->guessExtension(), ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                    $errors[] = 'Le format de l\'image doit être jpg, jpeg, png, gif ou webp.';
-                }
+            $actors = $form->get('actors')->getData();
+            $program->setActors($actors);
+            $programRepository->save($program, true);
 
-                $uploadDir = '/uploads/program/poster/';
-                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-                $newFilename = $uploadDir . basename($newFilename);
+            // Once the form is submitted, valid and the data inserted in database, you can define the success flash message
+            $this->addFlash('success', 'The new program has been created');
 
-                try {
-                    $imageFile->move(
-                        //road in the repertory config/serviecs.yaml
-                        $this->getParameter('program_poster_directory'),
-                        $newFilename
-                    );
-                    $program->setPoster($newFilename);
-
-                } catch (FileException $e) {
-                            $errors[] = 'Une erreur est survenue lors de l\'upload de l\'image.';
-                        }
-            }
-            if (empty($errors)) {
-                $programRepository->save($program, true);
-                return $this->redirectToRoute('program_index');
-            }
+            return $this->redirectToRoute('program_index');
         }
 
-        return $this->render("program/new.html.twig", [
-            'form' => $form->createView(),
-            'errors' => $errors,
+        return $this->render('program/new.html.twig', [
+            'program' => $program,
+            'form' => $form,
         ]);
     }
+
+
 }
 
 //Response = reponse HTTP complète

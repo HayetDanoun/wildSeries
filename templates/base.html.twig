@@ -20,6 +20,27 @@
     </header>
 
     <body>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </body>
 </html>
+
+
+{#        {% for categoryMessage, messages in app.flashes %}#}
+{#            {% for message in messages %}#}
+{#                <div class="alert alert-{{ categoryMessage }}">#}
+{#                    {{ message }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% endfor %}#}

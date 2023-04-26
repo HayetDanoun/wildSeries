@@ -165,6 +165,7 @@ class Program
         return $this;
     }
 
+
     /**
      * @return Collection<int, Actor>
      */
@@ -176,7 +177,7 @@ class Program
     public function addActor(Actor $actor): self
     {
         if (!$this->actors->contains($actor)) {
-            $this->actors->add($actor);
+            $this->actors[] = $actor;
             $actor->addProgram($this);
         }
 
@@ -187,6 +188,21 @@ class Program
     {
         if ($this->actors->removeElement($actor)) {
             $actor->removeProgram($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param iterable<int, Actor> $actors
+     * @return $this
+     */
+    public function setActors(iterable $actors): self
+    {
+        $this->actors = new ArrayCollection();
+
+        foreach ($actors as $actor) {
+            $this->addActor($actor);
         }
 
         return $this;
