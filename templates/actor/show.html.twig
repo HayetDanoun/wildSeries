@@ -21,7 +21,7 @@
                 {% if actor.programs is not empty %}
                 <ul>
                     {% for program in actor.programs %}
-                        <a href=" {{ path('program_show', { id : program.id }) }}">
+                        <a href=" {{ path('program_show', { slug : program.slug }) }}">
                             <li>{{ program.title }}</li>
                         </a>
                     {% endfor %}

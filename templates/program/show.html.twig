@@ -19,6 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ program.title }}</h5>
                         <p class="card-text">{{ program.synopsis }}</p>
+                        <p class="card-text">Duree de visionnage : {{ programDuration }}</p>
                         <strong>Acteurs :</strong>
                         <ul>
                             {% for actor in program.actors %}

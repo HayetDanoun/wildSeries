@@ -5,6 +5,7 @@ use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -29,7 +30,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             'year' => '2002',
         ],
         [
-            'title' => 'desperate-housewives',
+            'title' => 'Desperate Housewives',
             'country'=> 'America',
             'synopsis' => 'Un ville cachant bien des secrets',
             'year' => '2003',
@@ -42,6 +43,13 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         ],
     ];
 
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
     public function load(ObjectManager $manager): void
     {
         foreach (self::PROGRAMS as $key => $newValueProgram) {
@@ -50,6 +58,10 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setCountry($newValueProgram['country']);
             $program->setSynopsis($newValueProgram['synopsis']);
             $program->setYear($newValueProgram['year']);
+
+            $slug = $this->slugger->slug($newValueProgram['title'])->lower();
+            //$slug = $this->slugger->slug($program->getTitle());
+            $program->setSlug($slug);
 
             $category = $this->getReference('category_' . CategoryFixtures::CATEGORIES[array_rand(CategoryFixtures::CATEGORIES)]);
             $program->setCategory($category);
