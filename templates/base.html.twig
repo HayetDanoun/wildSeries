@@ -16,8 +16,7 @@
     </head>
 
     <header>
-        {% include '_navbar.html.twig' %}
-    </header>
+        {{ render(controller('App\\Controller\\NavbarController::navbar')) }}    </header>
 
     <body>
         {% for message in app.flashes('success') %}

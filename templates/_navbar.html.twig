@@ -18,7 +18,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path("category_index") }}">Alls categories</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{{ path("category_show", {'categoryName': category.name} ) }}">{{ category.name }}</a></li>
+                        {% endfor %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ path('category_new') }}">Add a category</a></li>
                     </ul>
