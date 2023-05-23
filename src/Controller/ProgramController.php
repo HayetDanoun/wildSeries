@@ -5,6 +5,7 @@ use App\Form\ProgramType;
 use App\Service\ProgramDuration;
 //use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use App\Service\Upload;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,8 +71,13 @@ Class ProgramController extends AbstractController
 
 
     #[Route('/new', name: 'program_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SluggerInterface $slugger, ProgramRepository $programRepository): Response
-    {
+    public function new(
+        Request $request,
+        SluggerInterface $slugger,
+        ProgramRepository $programRepository,
+        Upload $upload,
+    ): Response {
+
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
@@ -82,6 +88,23 @@ Class ProgramController extends AbstractController
 
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
+
+            $imageFile = $form->get('poster') !== null ? $form->get('poster')->getData() : null;
+            $errors = [];
+            if ($imageFile) {
+                $uploadDir = '/uploads/images/program/poster/';
+                $newFilename = $upload->uploadFile($imageFile,$errors ,$uploadDir);
+
+                if(empty($errors)) {
+                    $newFilename = $upload->uploadFile($imageFile,$errors ,$uploadDir);
+                } else {
+                    foreach ($errors as $error) {
+                        $this->addFlash('danger', $error);
+                    }
+                }
+
+                $program->setPoster($newFilename);
+            }
 
             $programRepository->save($program, true);
 
@@ -98,7 +121,7 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/edit/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Program $program, ProgramRepository $programRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request, Program $program, ProgramRepository $programRepository, SluggerInterface $slugger, Upload $upload): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
@@ -108,6 +131,13 @@ Class ProgramController extends AbstractController
             $program->setSlug($slug);
             $actors = $form->get('actors')->getData();
             $program->setActors($actors);
+
+            $imageFile = $form->get('poster') !== null ? $form->get('poster')->getData() : null;
+            if ($imageFile) {
+                $uploadDir = '/uploads/images/program/poster/';
+                $newFilename = $upload->uploadImage($imageFile, $uploadDir);
+                $program->setPoster($newFilename);
+            }
             $programRepository->save($program, true);
             $this->addFlash('success','Edit the program ' . $program->getTitle() . ' has been edited');
 
