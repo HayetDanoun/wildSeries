@@ -29,3 +29,5 @@ yarn-error.log
 ###> editeur de texte ###
 .idea
 .vscode
+
+/uploads/images/program/poster/
