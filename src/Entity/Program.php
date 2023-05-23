@@ -32,6 +32,12 @@ class Program
     #[ORM\Column(type: Types::TEXT)]
     private ?string $synopsis = null;
 
+    #[Assert\Image(
+          maxSize: "1M",
+          mimeTypes: ["image/jpeg", "image/jpg", "image/png", "image/gif"],
+          mimeTypesMessage: "Veuillez télécharger une image valide (jpg, gif, jpeg ou png)",
+          maxSizeMessage: "Le fichier est trop grand. Sa taille ne doit pas dépasser 50Mo."
+      )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 

@@ -90,20 +90,11 @@ Class ProgramController extends AbstractController
             $program->setSlug($slug);
 
             $imageFile = $form->get('poster') !== null ? $form->get('poster')->getData() : null;
-            $errors = [];
             if ($imageFile) {
                 $uploadDir = '/uploads/images/program/poster/';
-                $newFilename = $upload->uploadFile($imageFile,$errors ,$uploadDir);
-
-                if(empty($errors)) {
-                    $newFilename = $upload->uploadFile($imageFile,$errors ,$uploadDir);
-                } else {
-                    foreach ($errors as $error) {
-                        $this->addFlash('danger', $error);
-                    }
-                }
-
+                $newFilename = $upload->uploadFile($imageFile,$uploadDir);
                 $program->setPoster($newFilename);
+
             }
 
             $programRepository->save($program, true);

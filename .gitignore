@@ -30,4 +30,4 @@ yarn-error.log
 .idea
 .vscode
 
-/uploads/images/program/poster/
+public/uploads/images/program/poster/
