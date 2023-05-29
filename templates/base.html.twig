@@ -16,7 +16,8 @@
     </head>
 
     <header>
-        {{ render(controller('App\\Controller\\NavbarController::navbar')) }}    </header>
+        {{ render(controller('App\\Controller\\NavbarController::navbar')) }}
+    </header>
 
     <body>
         {% for message in app.flashes('success') %}
