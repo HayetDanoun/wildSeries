@@ -1,3 +1,7 @@
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
 
 *
 {
@@ -8,6 +12,7 @@
 }
 body
 {
+    color : #FFFFFF;
     min-height: 100vh;
     background: linear-gradient(#2b1055,#7597de);
 }
