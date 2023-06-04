@@ -8,16 +8,59 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+    <div class="container">
+        <div class="wrapper">
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="#">
+                    <div class="input-box">
+                    <span class="icon">
+{#                        <ion-icon name="mail"></ion-icon>#}
+                        <span class="icon"><img style="width: 15px" src="{{ asset("build/images/login/mail.svg") }}"></span>
+                    </span>
+                        <input type="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><img style="width: 15px" src="{{ asset("build/images/login/lock-closed.svg") }}"></span>
+                        <input type="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remeber-forgot">
+                        <label>
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+                        <a href="#">Forgot Password ?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="login-register">
+                        <p> Don't have an account ?
+                            <a href="#" class="registrer-link"> Registrer</a>
+                        </p>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+                    </div>
+                </form>
+            </div>
+        </div>
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
+    </div>
 
-        <button type="submit">login</button>
-    </form>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <ion-icon name="heart"></ion-icon>
+
+
+    {#    <form action="{{ path('app_login') }}" method="post">#}
+{#        <label for="username">Email:</label>#}
+{#        <input type="text" id="username" name="_username" value="{{ last_username }}">#}
+
+{#        <label for="password">Password:</label>#}
+{#        <input type="password" id="password" name="_password">#}
+
+{#        #}{# If you want to control the URL the user is redirected to on success#}
+{#        <input type="hidden" name="_target_path" value="/account"> #}
+
+{#        <button type="submit">login</button>#}
+{#    </form>#}
 {% endblock %}
