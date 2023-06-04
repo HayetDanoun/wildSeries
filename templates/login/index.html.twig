@@ -8,23 +8,30 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <div class="container">
-        <div class="wrapper">
-            <div class="form-box login">
-                <h2>Login</h2>
-                <form action="#">
+    <div class="login-registrer-page">
+
+        <div id='login-form'class='login-page'>
+
+            <div class="form-box">
+                <div class='button-box'>
+                    <div id='btn'></div>
+                    <button type='button'onclick='login()'class='toggle-btn'>Log In</button>
+                    <button type='button'onclick='register()'class='toggle-btn'>Register</button>
+                </div>
+
+                <form id='login' class='input-group-login'>
+                    <h2>Login</h2>
                     <div class="input-box">
-                    <span class="icon">
-{#                        <ion-icon name="mail"></ion-icon>#}
-                        <span class="icon"><img style="width: 15px" src="{{ asset("build/images/login/mail.svg") }}"></span>
-                    </span>
-                        <input type="email" required>
                         <label>Email</label>
+                        <input type="email" required>
+                        <ion-icon name="mail"></ion-icon>
+
                     </div>
                     <div class="input-box">
-                        <span class="icon"><img style="width: 15px" src="{{ asset("build/images/login/lock-closed.svg") }}"></span>
-                        <input type="password" required>
                         <label>Password</label>
+                        <input type="password" required>
+                        <ion-icon name="lock-closed"></ion-icon>
+
                     </div>
                     <div class="remeber-forgot">
                         <label>
@@ -38,17 +45,33 @@
                         <p> Don't have an account ?
                             <a href="#" class="registrer-link"> Registrer</a>
                         </p>
-
                     </div>
+                </form>
+
+
+                <form id='register' class='input-group-register' style="display: none">
+                    <input type='text'class='input-field'placeholder='First Name' required>
+                    <input type='text'class='input-field'placeholder='Last Name ' required>
+                    <input type='email'class='input-field'placeholder='Email Id' required>
+                    <input type='password'class='input-field'placeholder='Enter Password' required>
+                    <input type='password'class='input-field'placeholder='Confirm Password'  required>
+                    <input type='checkbox'class='check-box'><span>I agree to the terms and                                                   conditions</span>
+                    <button type='submit'class='submit-btn'>Register</button>
                 </form>
             </div>
         </div>
-
     </div>
+
+
+
+
+
+
+
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <ion-icon name="heart"></ion-icon>
+
 
 
     {#    <form action="{{ path('app_login') }}" method="post">#}
