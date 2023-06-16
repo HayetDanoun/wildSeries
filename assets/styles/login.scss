@@ -1,0 +1,219 @@
+img{
+    width: 50px;
+    height: auto;
+}
+
+h2 {
+    color: pink;
+}
+
+//*************************** CARD LOGIN ***********************************
+
+.login-registrer-page {
+    background: #3b82f6;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-box {
+    background: pink;
+    width: 450px;
+    height: auto;
+    position: relative;
+    margin: 2% auto;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px 0; //haut/bas droite/gauche
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(200px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    //background: transparent;
+    //overflow: hidden;
+    //position: relative;
+}
+
+.form-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-box
+{
+    padding: 10px;
+    margin: 15px 0 35px 0; //haut ... bas ...
+    box-shadow: 0 0 20px 2px #7fb9fd;
+    border-radius: 50px;
+}
+.toggle-btn
+{
+    padding:10px 30px;
+    cursor:pointer;
+    background:transparent;
+    border:0;
+}
+
+//texte login ou register
+.form-box h2 {
+    font-size: 2em;
+    color: #FFFFFF;
+}
+
+
+.input-box {
+    width: 100%;
+    border-bottom: 2px solid #162938;
+    margin-top: 40px ;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.input-box label {
+    position: absolute;
+    font-size: 1em;
+    color: #162938;
+    pointer-events: none;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #162938;
+    font-weight: bold;
+    padding: 0 35px 0 5px;
+}
+
+ion-icon{
+    color: black;
+}
+
+//#btn
+//{
+//    width: 100px;
+//    height: 100%;
+//    background: #F3C693;
+//    transition: .5s;
+//}
+
+//formulaire
+//.input-group-login
+//{
+//    top: 150px;
+//    width:280px;
+//    transition:.5s;
+//}
+//.input-group-register
+//{
+//    top: 120px;
+//    width:280px;
+//    transition:.5s;
+//}
+
+//.submit-btn
+//{
+//    width: 85%;
+//    padding: 10px 30px;
+//    cursor: pointer;
+//    display: block;
+//    margin: auto;
+//    background: #F3C693;
+//    border: 0;
+//    outline: none;
+//    border-radius: 30px;
+//}
+//
+//
+
+
+
+.remeber-forgot {
+    font-size:  0.9em;
+    color: #162938;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.remeber-forgot label input {
+    accent-color: #162938;
+    margin-right:3px;
+}
+
+.remeber-forgot a {
+    color: #162938;
+    text-decoration: none;
+}
+
+.remeber-forgot a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+.login-register {
+    font-size: 0.9em;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+
+.login-register p a {
+    color: #162938;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-register p a:hover {
+    text-decoration: underline;
+}
+
+#login-form
+{
+    /*display: none;*/
+}
+
+
+.check-box
+{
+    margin: 30px 10px 34px 0;
+}
+
+#login
+{
+    left:50px;
+}
+#login input
+{
+    color:white;
+    /*font-size:15;*/
+}
+#register
+{
+    left:450px;
+}
+#register input
+{
+    color:white;
+    /*font-size: 15;*/
+}

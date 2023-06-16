@@ -1,7 +1,9 @@
 {# templates/login/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{# ... #}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
     {% if error %}
@@ -9,30 +11,29 @@
     {% endif %}
 
     <div class="login-registrer-page">
-
-        <div id='login-form'class='login-page'>
-
+        <div id='login-form' class='login-page'>
             <div class="form-box">
+
                 <div class='button-box'>
                     <div id='btn'></div>
-                    <button type='button'onclick='login()'class='toggle-btn'>Log In</button>
-                    <button type='button'onclick='register()'class='toggle-btn'>Register</button>
+                    <button type='button' onclick='login()' class='toggle-btn'>Log In</button>
+                    <button type='button' onclick='register()' class='toggle-btn'>Register</button>
                 </div>
 
-                <form id='login' class='input-group-login'>
+                <form action="{{ path('app_login') }}" method="post" id='login' class='input-group-login'>
                     <h2>Login</h2>
                     <div class="input-box">
-                        <label>Email</label>
-                        <input type="email" required>
+                        <label for="username">Email:</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}">
                         <ion-icon name="mail"></ion-icon>
-
                     </div>
                     <div class="input-box">
-                        <label>Password</label>
-                        <input type="password" required>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="_password">
                         <ion-icon name="lock-closed"></ion-icon>
-
                     </div>
+{#                    If you want to control the URL the user is redirected to on success#}
+{#                    <input type="hidden" name="_target_path" value="/account">#}
                     <div class="remeber-forgot">
                         <label>
                             <input type="checkbox">
@@ -49,14 +50,46 @@
                 </form>
 
 
-                <form id='register' class='input-group-register' style="display: none">
-                    <input type='text'class='input-field'placeholder='First Name' required>
-                    <input type='text'class='input-field'placeholder='Last Name ' required>
-                    <input type='email'class='input-field'placeholder='Email Id' required>
-                    <input type='password'class='input-field'placeholder='Enter Password' required>
-                    <input type='password'class='input-field'placeholder='Confirm Password'  required>
-                    <input type='checkbox'class='check-box'><span>I agree to the terms and                                                   conditions</span>
-                    <button type='submit'class='submit-btn'>Register</button>
+
+                <form id='register' class='input-group-register' >
+                    <h2>Register</h2>
+                    <div class="input-box">
+                        <label>Nom</label>
+                        <input type="text" required>
+                        <ion-icon name="person-circle"></ion-icon>
+                    </div>
+                    <div class="input-box">
+                        <label>Prenom</label>
+                        <input type="text" required>
+                        <ion-icon name="person-circle"></ion-icon>
+                    </div>
+                    <div class="input-box">
+                        <label>Date de Naissance</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="input-box">
+                        <label>Mail</label>
+                        <input type="email" required>
+                        <ion-icon name="mail"></ion-icon>
+                    </div>
+                    <div class="input-box">
+                        <label>Mot de passe</label>
+                        <input type="password" required>
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </div>
+                    <div class="input-box">
+                        <label>Confirmation de mot de passe</label>
+                        <input type="text" required>
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </div>
+                    <div class="remeber-forgot">
+                        <label>
+                            <input type="checkbox">
+                            I agree to the terms and conditions
+                        </label>
+                    </div>
+
+                    <button type='submit' class='btn'>Register</button>
                 </form>
             </div>
         </div>
@@ -71,19 +104,4 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
-
-    {#    <form action="{{ path('app_login') }}" method="post">#}
-{#        <label for="username">Email:</label>#}
-{#        <input type="text" id="username" name="_username" value="{{ last_username }}">#}
-
-{#        <label for="password">Password:</label>#}
-{#        <input type="password" id="password" name="_password">#}
-
-{#        #}{# If you want to control the URL the user is redirected to on success#}
-{#        <input type="hidden" name="_target_path" value="/account"> #}
-
-{#        <button type="submit">login</button>#}
-{#    </form>#}
 {% endblock %}
